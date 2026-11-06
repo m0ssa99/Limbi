@@ -1,5 +1,7 @@
 # Limbi — C++ / Qt 6
 
+Versiunea 0.3 este în `dist/LimbiQt-0.3/LimbiQt.exe`, iar pachetul pentru coleg este `dist/LimbiQt-0.3-Windows.zip`. Include actualizări de conținut prin HTTPS, cu adresă configurabilă. Vezi [CONTENT-GUIDE.md](CONTENT-GUIDE.md) pentru pregătire și publicare. Manifestul implicit indică repository-ul public `m0ssa99/Limbi`, ramura `main`; primul set trebuie publicat înainte de folosire. Codul nu este încă publicat automat pe GitHub.
+
 Versiunea nouă are interfață Qt Widgets și nu folosește PowerShell la rulare.
 
 ## Utilizare

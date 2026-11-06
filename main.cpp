@@ -1,6 +1,7 @@
 #include <QtWidgets>
 #include <QRandomGenerator>
 #include <QLockFile>
+#include "library.h"
 
 class Window : public QMainWindow {
     QSettings settings{"Limbi", "LimbiQt"};
@@ -14,6 +15,31 @@ class Window : public QMainWindow {
     QDate paused;
     bool exiting = false;
     bool smoke = false;
+    LibraryUpdater *updater=nullptr;
+    QString libraryStatus="Biblioteca locală";
+    QDateTime lastAttempt;
+    QString manifestUrl() const { return settings.value("manifestUrl","https://raw.githubusercontent.com/m0ssa99/Limbi/main/library/manifest.json").toString(); }
+    QString cachePath() const { return QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation)+"/library.json"; }
+    void checkLibrary(bool manual=false) {
+        if(smoke)return;
+        lastAttempt=QDateTime::currentDateTime();
+        libraryStatus="Se verifică biblioteca…"; statusBar()->showMessage(libraryStatus);
+        updater->check(QUrl(manifestUrl()),[this,manual](QJsonArray updated,QString message){
+            if(!updated.isEmpty()) {
+                // Păstrează intrările retrase pentru accesul la favoritele existente.
+                QJsonArray archive, previous; QFile oldArchive(cachePath()+".saved");
+                if(oldArchive.open(QIODevice::ReadOnly))previous=QJsonDocument::fromJson(oldArchive.readAll()).array();
+                QSet<int> ids; for(auto v:updated)ids.insert(v.toObject()["id"].toInt());
+                for(auto v:previous+entries) { int key=v.toObject()["id"].toInt(); if(saved.contains(QString::number(key)) && !ids.contains(key)){archive.append(v);ids.insert(key);} }
+                QSaveFile backup(cachePath()+".saved"); if(backup.open(QIODevice::WriteOnly)){backup.write(QJsonDocument(archive).toJson());backup.commit();}
+                entries=updated;
+                bool found=false; for(auto v:entries)if(v.toObject()["id"]==current["id"]){current=v.toObject();found=true;break;}
+                if(found)render();else pick();
+            }
+            libraryStatus=message; statusBar()->showMessage(message);
+            if(manual)QMessageBox::information(this,"Bibliotecă",message);
+        });
+    }
     void schedule(int overrideMinutes = 0) {
         int minutes = settings.value("minutes",60).toInt();
         if (settings.value("random",true).toBool()) minutes += QRandomGenerator::global()->bounded(31)-15;
@@ -65,12 +91,17 @@ class Window : public QMainWindow {
         layout.addRow("Interval (minute)",&minutes); layout.addRow("De la ora",&start); layout.addRow("Până la ora",&end); layout.addRow(&random); layout.addRow(&startup);
         QLabel info("Pornirea automată folosește locația actuală a aplicației.\nPăstrează dosarul aici după activare."); layout.addRow(&info);
         QDialogButtonBox buttons(QDialogButtonBox::Save|QDialogButtonBox::Cancel); layout.addRow(&buttons);
+        QLineEdit source(manifestUrl()); source.setMinimumWidth(480); layout.insertRow(layout.rowCount()-1,"Manifest HTTPS",&source);
+        QCheckBox automatic("Verifică zilnic biblioteca"); automatic.setChecked(settings.value("autoUpdate",true).toBool()); layout.insertRow(layout.rowCount()-1,&automatic);
         connect(&buttons,&QDialogButtonBox::rejected,&d,&QDialog::reject);
         connect(&buttons,&QDialogButtonBox::accepted,&d,[&]{
+            QUrl url(source.text().trimmed());
+            if(url.scheme()!="https" || url.host().isEmpty() || !url.userInfo().isEmpty()){QMessageBox::warning(&d,"Adresă invalidă","Introdu adresa HTTPS a fișierului manifest.json.");return;}
             if(start.value()>=end.value()) { QMessageBox::warning(&d,"Program invalid","Ora de început trebuie să fie înaintea orei de final."); return; }
             if(startup.isChecked()) run.setValue("LimbiQt","\""+QDir::toNativeSeparators(QCoreApplication::applicationFilePath())+"\" --tray"); else run.remove("LimbiQt");
             run.sync();
             if(run.status()!=QSettings::NoError) { QMessageBox::warning(&d,"Pornire automată","Windows nu a permis salvarea setării de pornire."); return; }
+            settings.setValue("manifestUrl",url.toString()); settings.setValue("autoUpdate",automatic.isChecked());
             settings.setValue("minutes",minutes.value()); settings.setValue("start",start.value()); settings.setValue("end",end.value()); settings.setValue("random",random.isChecked()); schedule(); d.accept();
         }); d.exec();
     }
@@ -82,12 +113,15 @@ public:
     Window(bool test=false) : smoke(test) {
         QFile file(":/content.json"); if(!file.open(QIODevice::ReadOnly)) throw std::runtime_error("Content missing");
         entries=QJsonDocument::fromJson(file.readAll()).array(); if(entries.isEmpty()) throw std::runtime_error("Content empty");
+        if(!smoke){QFile cache(cachePath());QString error;QJsonArray local;if(cache.open(QIODevice::ReadOnly) && Library::validate(cache.read(Library::MaxBytes+1),local,error))entries=local;}
+        updater=new LibraryUpdater(cachePath(),this);
         saved=settings.value("saved").toStringList(); known=settings.value("known").toStringList(); recent=settings.value("recent").toStringList();
         setWindowTitle("Limbi • învață câte puțin"); resize(820,800); setMinimumSize(650,620);
         QPixmap icon(64,64); icon.fill(QColor("#405de6")); QPainter painter(&icon); painter.setPen(Qt::white); painter.setFont(QFont("Segoe UI",30,QFont::Bold)); painter.drawText(icon.rect(),Qt::AlignCenter,"L"); painter.end(); setWindowIcon(QIcon(icon));
         auto root=new QWidget; auto layout=new QVBoxLayout(root); layout->setContentsMargins(30,22,30,22); layout->setSpacing(14); setCentralWidget(root);
         auto top=new QHBoxLayout; auto title=new QLabel("Limbi"); title->setStyleSheet("font-size:30px;font-weight:700;color:#233455"); top->addWidget(title); top->addStretch();
         auto settingsButton=new QPushButton("Setări"); top->addWidget(settingsButton); connect(settingsButton,&QPushButton::clicked,this,[this]{preferences();}); layout->addLayout(top);
+        auto updateButton=new QPushButton("Actualizează biblioteca"); top->insertWidget(2,updateButton); connect(updateButton,&QPushButton::clicked,this,[this]{checkLibrary(true);});
         auto subtitle=new QLabel("Un cuvânt. Trei limbi. Puțin mai mult în fiecare zi."); layout->addWidget(subtitle);
         meta=new QLabel; meta->setStyleSheet("color:#405de6;font-weight:600"); layout->addWidget(meta);
         card=new QTextBrowser; card->setFrameShape(QFrame::NoFrame); layout->addWidget(card,1);
@@ -103,7 +137,8 @@ public:
         menu->addAction("Arată expresia",this,[this]{reveal();}); menu->addAction("Testează notificarea",this,[this]{notify();});
         menu->addAction("Expresii salvate",this,[this]{
             QDialog d(this); d.setWindowTitle("Expresii salvate"); d.resize(700,450); QVBoxLayout l(&d); QListWidget list; l.addWidget(&list);
-            for(const auto &v:entries){ auto e=v.toObject(); if(saved.contains(QString::number(e["id"].toInt()))) { auto item=new QListWidgetItem(e["en"].toString()+" / "+e["ro"].toString()+" / "+e["it"].toString(),&list); item->setData(Qt::UserRole,e); } }
+            QJsonArray favorites=entries; QFile archive(cachePath()+".saved");if(archive.open(QIODevice::ReadOnly))favorites+=QJsonDocument::fromJson(archive.readAll()).array(); QSet<int> seen;
+            for(const auto &v:favorites){ auto e=v.toObject(); int key=e["id"].toInt(); if(saved.contains(QString::number(key)) && !seen.contains(key)) { seen.insert(key);auto item=new QListWidgetItem(e["en"].toString()+" / "+e["ro"].toString()+" / "+e["it"].toString(),&list); item->setData(Qt::UserRole,e); } }
             if(!list.count())list.addItem("Încă nu ai expresii salvate.");
             connect(&list,&QListWidget::itemDoubleClicked,&d,[&](QListWidgetItem *item){auto e=item->data(Qt::UserRole).toJsonObject();if(!e.isEmpty()){current=e;render();d.accept();reveal();}});d.exec();
         });
@@ -111,6 +146,7 @@ public:
         menu->addAction("Setări",this,[this]{preferences();});menu->addSeparator();menu->addAction("Închide aplicația",this,[this]{exiting=true;qApp->quit();});tray->setContextMenu(menu);
         connect(tray,&QSystemTrayIcon::messageClicked,this,[this]{reveal();}); connect(tray,&QSystemTrayIcon::activated,this,[this](auto reason){if(reason==QSystemTrayIcon::DoubleClick)reveal();});
         if(!smoke)tray->show(); pick();schedule();
+        if(!smoke){auto updates=new QTimer(this);connect(updates,&QTimer::timeout,this,[this]{if(settings.value("autoUpdate",true).toBool() && (!lastAttempt.isValid() || lastAttempt.secsTo(QDateTime::currentDateTime())>=86400))checkLibrary();});updates->start(60000);if(settings.value("autoUpdate",true).toBool())QTimer::singleShot(1500,this,[this]{checkLibrary();});}
         auto timer=new QTimer(this); connect(timer,&QTimer::timeout,this,[this]{ auto now=QDateTime::currentDateTime(); int hour=now.time().hour(); if(paused!=now.date() && hour>=settings.value("start",9).toInt() && hour<settings.value("end",20).toInt() && now>=next){notify();schedule();} updateFooter();}); if(!smoke)timer->start(15000);
     }
 };
