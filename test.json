@@ -1,0 +1,422 @@
+[
+  {
+    "id": 1001,
+    "type": "expression",
+    "ro": "Te țin la curent.",
+    "en": "I'll keep you updated.",
+    "it": "Ti terrò aggiornato.",
+    "examples": {
+      "ro": "Te țin la curent cu progresul proiectului.",
+      "en": "I'll keep you updated on the project's progress.",
+      "it": "Ti terrò aggiornato sui progressi del progetto."
+    },
+    "status": "draft",
+    "reviewedBy": ""
+  },
+  {
+    "id": 1002,
+    "type": "expression",
+    "ro": "Putem începe acum.",
+    "en": "We can start now.",
+    "it": "Possiamo iniziare adesso.",
+    "examples": {
+      "ro": "Putem începe acum discuția despre proiect.",
+      "en": "We can start the discussion about the project now.",
+      "it": "Possiamo iniziare adesso la discussione sul progetto."
+    },
+    "status": "draft",
+    "reviewedBy": ""
+  },
+  {
+    "id": 1003,
+    "type": "expression",
+    "ro": "Am verificat deja.",
+    "en": "I've already checked.",
+    "it": "Ho già controllato.",
+    "examples": {
+      "ro": "Am verificat deja documentul.",
+      "en": "I've already checked the document.",
+      "it": "Ho già controllato il documento."
+    },
+    "status": "draft",
+    "reviewedBy": ""
+  },
+  {
+    "id": 1004,
+    "type": "expression",
+    "ro": "Este o idee bună.",
+    "en": "That's a good idea.",
+    "it": "È una buona idea.",
+    "examples": {
+      "ro": "Este o idee bună pentru proiect.",
+      "en": "That's a good idea for the project.",
+      "it": "È una buona idea per il progetto."
+    },
+    "status": "draft",
+    "reviewedBy": ""
+  },
+  {
+    "id": 1005,
+    "type": "expression",
+    "ro": "Să ne concentrăm pe asta.",
+    "en": "Let's focus on this.",
+    "it": "Concentriamoci su questo.",
+    "examples": {
+      "ro": "Să ne concentrăm pe asta astăzi.",
+      "en": "Let's focus on this today.",
+      "it": "Concentriamoci su questo oggi."
+    },
+    "status": "draft",
+    "reviewedBy": ""
+  },
+  {
+    "id": 1006,
+    "type": "expression",
+    "ro": "Nu am primit încă răspuns.",
+    "en": "I haven't received a reply yet.",
+    "it": "Non ho ancora ricevuto una risposta.",
+    "examples": {
+      "ro": "Nu am primit încă răspuns de la client.",
+      "en": "I haven't received a reply from the client yet.",
+      "it": "Non ho ancora ricevuto una risposta dal cliente."
+    },
+    "status": "draft",
+    "reviewedBy": ""
+  },
+  {
+    "id": 1007,
+    "type": "expression",
+    "ro": "Aș dori să clarific ceva.",
+    "en": "I'd like to clarify something.",
+    "it": "Vorrei chiarire una cosa.",
+    "examples": {
+      "ro": "Aș dori să clarific ceva despre proiect.",
+      "en": "I'd like to clarify something about the project.",
+      "it": "Vorrei chiarire una cosa sul progetto."
+    },
+    "status": "draft",
+    "reviewedBy": ""
+  },
+  {
+    "id": 1008,
+    "type": "expression",
+    "ro": "Aceasta este versiunea finală.",
+    "en": "This is the final version.",
+    "it": "Questa è la versione finale.",
+    "examples": {
+      "ro": "Aceasta este versiunea finală a documentului.",
+      "en": "This is the final version of the document.",
+      "it": "Questa è la versione finale del documento."
+    },
+    "status": "draft",
+    "reviewedBy": ""
+  },
+  {
+    "id": 1009,
+    "type": "expression",
+    "ro": "Putem îmbunătăți acest lucru.",
+    "en": "We can improve this.",
+    "it": "Possiamo migliorare questo.",
+    "examples": {
+      "ro": "Putem îmbunătăți acest lucru împreună.",
+      "en": "We can improve this together.",
+      "it": "Possiamo migliorare questo insieme."
+    },
+    "status": "draft",
+    "reviewedBy": ""
+  },
+  {
+    "id": 1010,
+    "type": "expression",
+    "ro": "Am nevoie de aprobarea ta.",
+    "en": "I need your approval.",
+    "it": "Ho bisogno della tua approvazione.",
+    "examples": {
+      "ro": "Am nevoie de aprobarea ta pentru document.",
+      "en": "I need your approval for the document.",
+      "it": "Ho bisogno della tua approvazione per il documento."
+    },
+    "status": "draft",
+    "reviewedBy": ""
+  },
+  {
+    "id": 1011,
+    "type": "expression",
+    "ro": "Suntem în grafic.",
+    "en": "We're on schedule.",
+    "it": "Siamo nei tempi previsti.",
+    "examples": {
+      "ro": "Suntem în grafic cu proiectul.",
+      "en": "We're on schedule with the project.",
+      "it": "Siamo nei tempi previsti con il progetto."
+    },
+    "status": "draft",
+    "reviewedBy": ""
+  },
+  {
+    "id": 1012,
+    "type": "expression",
+    "ro": "Situația s-a schimbat.",
+    "en": "The situation has changed.",
+    "it": "La situazione è cambiata.",
+    "examples": {
+      "ro": "Situația s-a schimbat în proiect.",
+      "en": "The situation has changed in the project.",
+      "it": "La situazione è cambiata nel progetto."
+    },
+    "status": "draft",
+    "reviewedBy": ""
+  },
+  {
+    "id": 1013,
+    "type": "expression",
+    "ro": "Apreciez feedbackul tău.",
+    "en": "I appreciate your feedback.",
+    "it": "Apprezzo il tuo feedback.",
+    "examples": {
+      "ro": "Apreciez feedbackul tău despre document.",
+      "en": "I appreciate your feedback on the document.",
+      "it": "Apprezzo il tuo feedback sul documento."
+    },
+    "status": "draft",
+    "reviewedBy": ""
+  },
+  {
+    "id": 1014,
+    "type": "expression",
+    "ro": "Voi trimite detaliile imediat.",
+    "en": "I'll send the details shortly.",
+    "it": "Invierò i dettagli a breve.",
+    "examples": {
+      "ro": "Voi trimite detaliile imediat după ședință.",
+      "en": "I'll send the details shortly after the meeting.",
+      "it": "Invierò i dettagli a breve dopo la riunione."
+    },
+    "status": "draft",
+    "reviewedBy": ""
+  },
+  {
+    "id": 1015,
+    "type": "expression",
+    "ro": "Cred că funcționează.",
+    "en": "I think it works.",
+    "it": "Penso che funzioni.",
+    "examples": {
+      "ro": "Cred că funcționează pentru proiect.",
+      "en": "I think it works for the project.",
+      "it": "Penso che funzioni per il progetto."
+    },
+    "status": "draft",
+    "reviewedBy": ""
+  },
+  {
+    "id": 1016,
+    "type": "expression",
+    "ro": "Mai avem câțiva pași.",
+    "en": "We still have a few steps left.",
+    "it": "Ci restano ancora alcuni passaggi.",
+    "examples": {
+      "ro": "Mai avem câțiva pași pentru proiect.",
+      "en": "We still have a few steps left for the project.",
+      "it": "Ci restano ancora alcuni passaggi per il progetto."
+    },
+    "status": "draft",
+    "reviewedBy": ""
+  },
+  {
+    "id": 1017,
+    "type": "expression",
+    "ro": "Acesta este punctul principal.",
+    "en": "This is the main point.",
+    "it": "Questo è il punto principale.",
+    "examples": {
+      "ro": "Acesta este punctul principal al proiectului.",
+      "en": "This is the main point of the project.",
+      "it": "Questo è il punto principale del progetto."
+    },
+    "status": "draft",
+    "reviewedBy": ""
+  },
+  {
+    "id": 1018,
+    "type": "expression",
+    "ro": "Propun o altă variantă.",
+    "en": "I suggest another option.",
+    "it": "Propongo un'altra soluzione.",
+    "examples": {
+      "ro": "Propun o altă variantă pentru proiect.",
+      "en": "I suggest another option for the project.",
+      "it": "Propongo un'altra soluzione per il progetto."
+    },
+    "status": "draft",
+    "reviewedBy": ""
+  },
+  {
+    "id": 1019,
+    "type": "expression",
+    "ro": "Să revenim la subiect.",
+    "en": "Let's get back to the topic.",
+    "it": "Torniamo all'argomento.",
+    "examples": {
+      "ro": "Să revenim la subiectul proiectului.",
+      "en": "Let's get back to the project topic.",
+      "it": "Torniamo all'argomento del progetto."
+    },
+    "status": "draft",
+    "reviewedBy": ""
+  },
+  {
+    "id": 1020,
+    "type": "expression",
+    "ro": "Acest lucru necesită atenție.",
+    "en": "This needs attention.",
+    "it": "Questo richiede attenzione.",
+    "examples": {
+      "ro": "Acest lucru necesită atenție în proiect.",
+      "en": "This needs attention in the project.",
+      "it": "Questo richiede attenzione nel progetto."
+    },
+    "status": "draft",
+    "reviewedBy": ""
+  },
+  {
+    "id": 1021,
+    "type": "expression",
+    "ro": "Am făcut o modificare.",
+    "en": "I've made a change.",
+    "it": "Ho fatto una modifica.",
+    "examples": {
+      "ro": "Am făcut o modificare în document.",
+      "en": "I've made a change to the document.",
+      "it": "Ho fatto una modifica al documento."
+    },
+    "status": "draft",
+    "reviewedBy": ""
+  },
+  {
+    "id": 1022,
+    "type": "word",
+    "ro": "aprobare",
+    "en": "approval",
+    "it": "approvazione",
+    "examples": {
+      "ro": "Aprobarea este necesară pentru proiect.",
+      "en": "Approval is required for the project.",
+      "it": "L'approvazione è necessaria per il progetto."
+    },
+    "status": "draft",
+    "reviewedBy": ""
+  },
+  {
+    "id": 1023,
+    "type": "word",
+    "ro": "progres",
+    "en": "progress",
+    "it": "progresso",
+    "examples": {
+      "ro": "Progresul este vizibil în proiect.",
+      "en": "Progress is visible in the project.",
+      "it": "I progressi sono visibili nel progetto."
+    },
+    "status": "draft",
+    "reviewedBy": ""
+  },
+  {
+    "id": 1024,
+    "type": "word",
+    "ro": "revizuire",
+    "en": "review",
+    "it": "revisione",
+    "examples": {
+      "ro": "Revizuirea documentului începe astăzi.",
+      "en": "The document review starts today.",
+      "it": "La revisione del documento inizia oggi."
+    },
+    "status": "draft",
+    "reviewedBy": ""
+  },
+  {
+    "id": 1025,
+    "type": "word",
+    "ro": "feedback",
+    "en": "feedback",
+    "it": "feedback",
+    "examples": {
+      "ro": "Feedbackul este util pentru proiect.",
+      "en": "Feedback is useful for the project.",
+      "it": "Il feedback è utile per il progetto."
+    },
+    "status": "draft",
+    "reviewedBy": ""
+  },
+  {
+    "id": 1026,
+    "type": "word",
+    "ro": "prioritate",
+    "en": "priority",
+    "it": "priorità",
+    "examples": {
+      "ro": "Aceasta este prioritatea principală.",
+      "en": "This is the main priority.",
+      "it": "Questa è la priorità principale."
+    },
+    "status": "draft",
+    "reviewedBy": ""
+  },
+  {
+    "id": 1027,
+    "type": "word",
+    "ro": "procedură",
+    "en": "procedure",
+    "it": "procedura",
+    "examples": {
+      "ro": "Procedura este descrisă în document.",
+      "en": "The procedure is described in the document.",
+      "it": "La procedura è descritta nel documento."
+    },
+    "status": "draft",
+    "reviewedBy": ""
+  },
+  {
+    "id": 1028,
+    "type": "word",
+    "ro": "versiune",
+    "en": "version",
+    "it": "versione",
+    "examples": {
+      "ro": "Versiunea actuală este stabilă.",
+      "en": "The current version is stable.",
+      "it": "La versione attuale è stabile."
+    },
+    "status": "draft",
+    "reviewedBy": ""
+  },
+  {
+    "id": 1029,
+    "type": "word",
+    "ro": "obiectiv",
+    "en": "goal",
+    "it": "obiettivo",
+    "examples": {
+      "ro": "Obiectivul este clar pentru echipă.",
+      "en": "The goal is clear for the team.",
+      "it": "L'obiettivo è chiaro per il team."
+    },
+    "status": "draft",
+    "reviewedBy": ""
+  },
+  {
+    "id": 1030,
+    "type": "word",
+    "ro": "departament",
+    "en": "department",
+    "it": "reparto",
+    "examples": {
+      "ro": "Departamentul participă la proiect.",
+      "en": "The department is involved in the project.",
+      "it": "Il reparto partecipa al progetto."
+    },
+    "status": "draft",
+    "reviewedBy": ""
+  }
+]

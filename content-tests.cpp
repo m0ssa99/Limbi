@@ -1,4 +1,4 @@
-#include "library.h"
+#include "publisher.h"
 #include <cstdlib>
 static void require(bool result,const char *message){if(!result){qCritical()<<message;std::exit(1);}}
 int main(int argc,char **argv){
@@ -19,5 +19,16 @@ int main(int argc,char **argv){
     m["url"]="https://evil.example/content.json";require(!Library::manifest(QJsonDocument(m).toJson(),base,url,hash,error),"cross-host accepted");
     m["url"]="http://raw.githubusercontent.com/content.json";require(!Library::manifest(QJsonDocument(m).toJson(),base,url,hash,error),"HTTP accepted");
     m["url"]="content.json";m["sha256"]="bad";require(!Library::manifest(QJsonDocument(m).toJson(),base,url,hash,error),"invalid checksum accepted");
-    qInfo()<<"12 content/manifest validation checks passed";
+    QTemporaryDir temp; require(temp.isValid(),"temporary directory unavailable");
+    QString source=temp.filePath("source.json"),destination=temp.filePath("library"),package,message;
+    QFile input(source);require(input.open(QIODevice::WriteOnly),"cannot write fixture");input.write(bytes({e}));input.close();
+    require(Publisher::prepare(source,destination,package,message),"publisher rejected valid source");
+    QFile mf(destination+"/manifest.json");require(mf.open(QIODevice::ReadOnly),"manifest not generated");auto originalManifest=mf.readAll();mf.close();
+    auto object=QJsonDocument::fromJson(originalManifest).object();QFile payload(destination+"/"+object["url"].toString());require(payload.open(QIODevice::ReadOnly),"content not generated");
+    auto data=payload.readAll();payload.close();require(Library::validate(data,output,error),"published content unreadable by app");
+    require(QCryptographicHash::hash(data,QCryptographicHash::Sha256).toHex()==object["sha256"].toString().toLatin1(),"published checksum mismatch");
+    require(input.open(QIODevice::WriteOnly|QIODevice::Truncate),"cannot replace fixture");input.write("broken JSON");input.close();
+    require(!Publisher::prepare(source,destination,package,message),"publisher accepted broken input");
+    require(mf.open(QIODevice::ReadOnly) && mf.readAll()==originalManifest,"invalid source changed existing manifest");
+    qInfo()<<"Content, manifest and publisher checks passed";
 }
