@@ -1,0 +1,7 @@
+cmake_minimum_required(VERSION 3.21)
+project(LimbiQt VERSION 0.2 LANGUAGES CXX)
+set(CMAKE_CXX_STANDARD 17)
+find_package(Qt6 REQUIRED COMPONENTS Widgets)
+qt_add_executable(LimbiQt WIN32 main.cpp)
+qt_add_resources(LimbiQt content PREFIX "/" FILES content.json)
+target_link_libraries(LimbiQt PRIVATE Qt6::Widgets)
